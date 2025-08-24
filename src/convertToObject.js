@@ -6,19 +6,14 @@
  * @return {object}
  */
 function convertToObject(sourceString) {
-   const style = {};
-
-  for (const entry of sourceString.split(';')) {
-    if (entry.trim() === '') {
-      continue;
-    }
-
-    const [key, value] = entry.split(':');
-
-    style[key.trim()] = value.trim();
-  }
-
-  return style;
+   return sourceString
+    .split(';')
+    .filter(entry => entry.trim() !== '') // відкидаємо порожні
+    .reduce((styles, entry) => {
+      const [key, value] = entry.split(':', 2); // беремо лише першу ":"
+      styles[key.trim()] = value.trim();
+      return styles;
+    }, {});
 }
 
 
