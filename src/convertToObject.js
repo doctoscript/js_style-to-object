@@ -10,10 +10,15 @@ function convertToObject(sourceString) {
     .split(';')
     .filter(entry => entry.trim() !== '') // відкидаємо порожні
     .reduce((styles, entry) => {
-      const [key, value] = entry.split(':', 2); // беремо лише першу ":"
-      styles[key.trim()] = value.trim();
-      return styles;
-    }, {});
+  const [key, value] = entry.split(':', 2);
+
+  if (value === undefined) {
+    return styles; // пропускаємо некоректний запис
+  }
+
+  styles[key.trim()] = value.trim();
+  return styles;
+}, {});
 }
 
 
